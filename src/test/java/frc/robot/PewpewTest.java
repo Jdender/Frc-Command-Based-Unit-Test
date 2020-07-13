@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import org.junit.Test;
 import frc.robot.pewpew.*;
 
-// Make maintainable -> then add testabilty
-
 public class PewpewTest {
 
     @Test
