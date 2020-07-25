@@ -9,12 +9,12 @@ public class PewpewTest {
 
     @Test
     public void testPewpewSubsystem() {
-        var core = mock(PewpewCore.class);
-        var controller = mock(XboxController.class);
+        final var core = mock(PewpewCore.class);
+        final var controller = mock(XboxController.class);
 
-        when(controller.getRawAxis(0)).thenReturn(10.0).thenReturn(20.0);
+        when(controller.getRawAxis(0)).thenReturn(10.0, 20.0);
 
-        var pewpew = new PewpewSubsystem(core, controller);
+        final var pewpew = new PewpewSubsystem(core, controller);
 
         pewpew.runMotorFromController();
         verify(core).setMotor(20.0);
@@ -25,11 +25,11 @@ public class PewpewTest {
 
     @Test
     public void testPewpewCommand() {
-        var pewpew = mock(PewpewSubsystem.class);
+        final var pewpew = mock(PewpewSubsystem.class);
 
-        when(pewpew.getSensor()).thenReturn(false).thenReturn(false).thenReturn(true);
+        when(pewpew.getSensor()).thenReturn(false, false, true);
 
-        var command = new PewpewCommand(pewpew);
+        final var command = new PewpewCommand(pewpew);
 
         command.execute();
         command.execute();
