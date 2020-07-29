@@ -26,4 +26,19 @@ public final class Constants {
         public static final int MOTOR_ID = 0;
         public static final int SENSOR_ID = 0;
     }
+
+    public static final class ColorWheelConstants {
+
+        public static final int LIFT_MOTOR_ID = 0;
+        public static final int SPIN_MOTOR_ID = 0;
+
+        // Convert degree/tick to seconds
+        public static final double ENCODER_RATIO = (360.0 / 1024.0) * 1000000;
+
+        public static final class ArmPosition {
+
+            public static final int UP = 98;
+            public static final int DOWN = 2;
+        }
+    }
 }
