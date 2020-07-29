@@ -11,18 +11,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ExampleCommand extends CommandBase {
 
-    private final ExampleSubsystem pewpew;
+    private final ExampleSubsystem example;
 
-    public ExampleCommand(final ExampleSubsystem pewpew) {
-        addRequirements(pewpew);
-        this.pewpew = pewpew;
+    public ExampleCommand(final ExampleSubsystem example) {
+        addRequirements(example);
+        this.example = example;
     }
 
     @Override
     public void execute() {
-        if (!pewpew.getSensor()) {
+        if (!example.getSensor()) {
             return;
         }
-        pewpew.runMotorFromController();
+        example.runMotorFromController();
     }
 }

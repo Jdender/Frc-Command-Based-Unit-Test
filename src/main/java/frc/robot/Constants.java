@@ -21,7 +21,7 @@ public final class Constants {
 
     public static final int CONTROLLER_ID = 0;
 
-    public static final class PewpewConstants {
+    public static final class ExampleConstants {
 
         public static final int MOTOR_ID = 0;
         public static final int SENSOR_ID = 0;

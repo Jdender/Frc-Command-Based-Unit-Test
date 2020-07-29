@@ -2,7 +2,7 @@ package frc.robot.example;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
-import static frc.robot.Constants.PewpewConstants.*;
+import static frc.robot.Constants.ExampleConstants.*;
 
 public class ExampleCore {
 

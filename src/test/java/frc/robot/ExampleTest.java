@@ -8,34 +8,34 @@ import frc.robot.example.*;
 public class ExampleTest {
 
     @Test
-    public void testPewpewSubsystem() {
+    public void testExampleSubsystem() {
         final var core = mock(ExampleCore.class);
         final var controller = mock(XboxController.class);
 
         when(controller.getRawAxis(0)).thenReturn(10.0, 20.0);
 
-        final var pewpew = new ExampleSubsystem(core, controller);
+        final var example = new ExampleSubsystem(core, controller);
 
-        pewpew.runMotorFromController();
+        example.runMotorFromController();
         verify(core).setMotor(20.0);
 
-        pewpew.runMotorFromController();
+        example.runMotorFromController();
         verify(core).setMotor(40.0);
     }
 
     @Test
-    public void testPewpewCommand() {
-        final var pewpew = mock(ExampleSubsystem.class);
+    public void testExampleCommand() {
+        final var example = mock(ExampleSubsystem.class);
 
-        when(pewpew.getSensor()).thenReturn(false, false, true);
+        when(example.getSensor()).thenReturn(false, false, true);
 
-        final var command = new ExampleCommand(pewpew);
-
-        command.execute();
-        command.execute();
-        verify(pewpew, times(0)).runMotorFromController();
+        final var command = new ExampleCommand(example);
 
         command.execute();
-        verify(pewpew, times(1)).runMotorFromController();
+        command.execute();
+        verify(example, times(0)).runMotorFromController();
+
+        command.execute();
+        verify(example, times(1)).runMotorFromController();
     }
 }
