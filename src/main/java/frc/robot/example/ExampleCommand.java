@@ -5,15 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.pewpew;
+package frc.robot.example;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class PewpewCommand extends CommandBase {
+public class ExampleCommand extends CommandBase {
 
-    private final PewpewSubsystem pewpew;
+    private final ExampleSubsystem pewpew;
 
-    public PewpewCommand(final PewpewSubsystem pewpew) {
+    public ExampleCommand(final ExampleSubsystem pewpew) {
         addRequirements(pewpew);
         this.pewpew = pewpew;
     }

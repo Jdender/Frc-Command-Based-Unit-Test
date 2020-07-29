@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.colorwheel.ColorWheelCore;
 import frc.robot.colorwheel.ColorWheelSubsystem;
-import frc.robot.pewpew.PewpewCommand;
-import frc.robot.pewpew.PewpewCore;
-import frc.robot.pewpew.PewpewSubsystem;
+import frc.robot.example.ExampleCommand;
+import frc.robot.example.ExampleCore;
+import frc.robot.example.ExampleSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -29,7 +29,7 @@ import frc.robot.pewpew.PewpewSubsystem;
 public class RobotContainer {
     XboxController controller = new XboxController(Constants.CONTROLLER_ID);
 
-    PewpewSubsystem pewpew = new PewpewSubsystem(new PewpewCore(), controller);
+    ExampleSubsystem example = new ExampleSubsystem(new ExampleCore(), controller);
     ColorWheelSubsystem colorWheel = new ColorWheelSubsystem(new ColorWheelCore());
 
     /**
@@ -47,7 +47,7 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(controller, 0).whenHeld(new PewpewCommand(pewpew));
+        new JoystickButton(controller, 0).whenHeld(new ExampleCommand(example));
         new JoystickButton(controller, 1).whenHeld(new InstantCommand(colorWheel::toggle, colorWheel));
     }
 

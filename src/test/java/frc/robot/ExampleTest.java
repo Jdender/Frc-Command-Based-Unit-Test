@@ -3,18 +3,18 @@ package frc.robot;
 import static org.mockito.Mockito.*;
 import edu.wpi.first.wpilibj.XboxController;
 import org.junit.Test;
-import frc.robot.pewpew.*;
+import frc.robot.example.*;
 
-public class PewpewTest {
+public class ExampleTest {
 
     @Test
     public void testPewpewSubsystem() {
-        final var core = mock(PewpewCore.class);
+        final var core = mock(ExampleCore.class);
         final var controller = mock(XboxController.class);
 
         when(controller.getRawAxis(0)).thenReturn(10.0, 20.0);
 
-        final var pewpew = new PewpewSubsystem(core, controller);
+        final var pewpew = new ExampleSubsystem(core, controller);
 
         pewpew.runMotorFromController();
         verify(core).setMotor(20.0);
@@ -25,11 +25,11 @@ public class PewpewTest {
 
     @Test
     public void testPewpewCommand() {
-        final var pewpew = mock(PewpewSubsystem.class);
+        final var pewpew = mock(ExampleSubsystem.class);
 
         when(pewpew.getSensor()).thenReturn(false, false, true);
 
-        final var command = new PewpewCommand(pewpew);
+        final var command = new ExampleCommand(pewpew);
 
         command.execute();
         command.execute();

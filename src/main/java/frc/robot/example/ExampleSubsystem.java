@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.pewpew;
+package frc.robot.example;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PewpewSubsystem extends SubsystemBase {
+public class ExampleSubsystem extends SubsystemBase {
 
-    private final PewpewCore core;
+    private final ExampleCore core;
     private final XboxController controller;
 
-    public PewpewSubsystem(PewpewCore core, XboxController controller) {
+    public ExampleSubsystem(ExampleCore core, XboxController controller) {
         this.core = core;
         this.controller = controller;
     }
