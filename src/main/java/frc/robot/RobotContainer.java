@@ -24,9 +24,9 @@ import frc.robot.colorwheel.ColorWheelSubsystem;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    final XboxController controller = new XboxController(Constants.CONTROLLER_ID);
+    private final XboxController controller = new XboxController(Constants.CONTROLLER_ID);
 
-    final ColorWheelSubsystem colorWheel = new ColorWheelSubsystem(new ColorWheelCore());
+    private final ColorWheelSubsystem colorWheel = new ColorWheelSubsystem(new ColorWheelCore());
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.

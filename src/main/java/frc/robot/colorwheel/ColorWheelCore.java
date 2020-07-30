@@ -35,8 +35,12 @@ public class ColorWheelCore extends SubsystemBase {
         return liftEncoder.getPeriod() * ENCODER_RATIO;
     }
 
-    public void setLiftMotorSpeed(final double speed) {
-        liftMotor.set(ControlMode.PercentOutput, speed);
+    public void startLiftMotor() {
+        liftMotor.set(ControlMode.PercentOutput, MOTOR_SPEED_PERCENT);
+    }
+
+    public void stopLiftMotor() {
+        liftMotor.set(ControlMode.PercentOutput, 0);
     }
 
     private final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kOnboard);

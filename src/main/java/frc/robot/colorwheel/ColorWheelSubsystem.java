@@ -22,12 +22,13 @@ public class ColorWheelSubsystem extends SubsystemBase {
             return this;
         }
 
-        public ArmState toggle();
+        public ArmState toggle(final ColorWheelCore colorWheel);
 
         public class GoingUp implements ArmState {
             @Override
             public ArmState execute(final ColorWheelCore colorWheel) {
                 if (colorWheel.getCurrentPosition() >= ArmPosition.UP) {
+                    colorWheel.stopLiftMotor();
                     return new CurrentlyUp();
                 } else {
                     return this;
@@ -35,14 +36,16 @@ public class ColorWheelSubsystem extends SubsystemBase {
             }
 
             @Override
-            public ArmState toggle() {
+            public ArmState toggle(final ColorWheelCore colorWheel) {
+                colorWheel.startLiftMotor();
                 return new GoingDown();
             }
         }
 
         public class CurrentlyUp implements ArmState {
             @Override
-            public ArmState toggle() {
+            public ArmState toggle(final ColorWheelCore colorWheel) {
+                colorWheel.startLiftMotor();
                 return new GoingDown();
             }
         }
@@ -51,6 +54,7 @@ public class ColorWheelSubsystem extends SubsystemBase {
             @Override
             public ArmState execute(final ColorWheelCore colorWheel) {
                 if (colorWheel.getCurrentPosition() <= ArmPosition.DOWN) {
+                    colorWheel.stopLiftMotor();
                     return new CurrentlyDown();
                 } else {
                     return this;
@@ -58,14 +62,16 @@ public class ColorWheelSubsystem extends SubsystemBase {
             }
 
             @Override
-            public ArmState toggle() {
+            public ArmState toggle(final ColorWheelCore colorWheel) {
+                colorWheel.startLiftMotor();
                 return new GoingUp();
             }
         }
 
         public class CurrentlyDown implements ArmState {
             @Override
-            public ArmState toggle() {
+            public ArmState toggle(final ColorWheelCore colorWheel) {
+                colorWheel.startLiftMotor();
                 return new GoingUp();
             }
         }
@@ -78,6 +84,6 @@ public class ColorWheelSubsystem extends SubsystemBase {
     }
 
     public void toggle() {
-        currentState = currentState.toggle();
+        currentState = currentState.toggle(colorWheel);
     }
 }

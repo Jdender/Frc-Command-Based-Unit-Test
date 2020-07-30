@@ -32,6 +32,8 @@ public final class Constants {
         public static final int LIFT_MOTOR_ID = 0;
         public static final int SPIN_MOTOR_ID = 0;
 
+        public static final double MOTOR_SPEED_PERCENT = .1;
+
         // Convert degree/tick to seconds
         public static final double ENCODER_RATIO = (360.0 / 1024.0) * 1000000;
 

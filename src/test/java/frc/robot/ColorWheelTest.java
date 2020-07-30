@@ -20,6 +20,7 @@ public class ColorWheelTest {
         // Going Up
         {
             colorWheel.toggle();
+            verify(core, times(1)).startLiftMotor();
 
             range(0, 3).forEach((i) -> {
                 colorWheel.execute();
@@ -28,11 +29,14 @@ public class ColorWheelTest {
 
             colorWheel.execute();
             assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyUp);
+
+            verify(core, times(1)).stopLiftMotor();
         }
 
         // Going Down
         {
             colorWheel.toggle();
+            verify(core, times(2)).startLiftMotor();
 
             range(0, 3).forEach((i) -> {
                 colorWheel.execute();
@@ -41,6 +45,8 @@ public class ColorWheelTest {
 
             colorWheel.execute();
             assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyDown);
+
+            verify(core, times(2)).stopLiftMotor();
         }
     }
 }
