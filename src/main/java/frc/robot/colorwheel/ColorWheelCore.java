@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Counter.Mode;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PID;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatch;
@@ -16,6 +18,8 @@ import com.revrobotics.ColorMatch;
 import static frc.robot.Constants.ColorWheelConstants.*;
 
 public class ColorWheelCore extends SubsystemBase {
+
+    private final PID colorWheelPID = new PID(0.1, 0, 0, 0, 0, 0, 0, 0, 0);
 
     private final TalonSRX liftMotor = new TalonSRX(LIFT_MOTOR_ID);
     private final Counter liftEncoder = new Counter(Mode.kSemiperiod);
@@ -29,14 +33,18 @@ public class ColorWheelCore extends SubsystemBase {
         colorMatcher.addColorMatch(greenTarget);
         colorMatcher.addColorMatch(blueTarget);
         colorMatcher.addColorMatch(yellowTarget);
+
+        var tab = Shuffleboard.getTab("Debug");
+        tab.addNumber("Encoder Value (Pre Ratio)", liftEncoder::getPeriod);
+        tab.addNumber("Encoder Value (With Ratio)", this::getCurrentPosition);
     }
 
     public double getCurrentPosition() {
         return liftEncoder.getPeriod() * ENCODER_RATIO;
     }
 
-    public void startLiftMotor() {
-        liftMotor.set(ControlMode.PercentOutput, MOTOR_SPEED_PERCENT);
+    public void updateLiftMotor(final int target) {
+        liftMotor.set(ControlMode.PercentOutput, -colorWheelPID.pidCalculate(target, getCurrentPosition()));
     }
 
     public void stopLiftMotor() {

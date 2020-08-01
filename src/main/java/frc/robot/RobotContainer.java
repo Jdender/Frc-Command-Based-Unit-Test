@@ -43,7 +43,7 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(controller, 0).whenHeld(new InstantCommand(colorWheel::toggle, colorWheel));
+        new JoystickButton(controller, 1).whenHeld(new InstantCommand(colorWheel::toggle, colorWheel));
     }
 
     /**

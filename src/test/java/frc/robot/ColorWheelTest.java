@@ -6,6 +6,7 @@ import static java.util.stream.IntStream.range;
 import org.junit.Test;
 import frc.robot.colorwheel.*;
 import frc.robot.colorwheel.ColorWheelSubsystem.ArmState;
+import frc.robot.Constants.ColorWheelConstants.ArmTargets;
 
 public class ColorWheelTest {
 
@@ -20,14 +21,14 @@ public class ColorWheelTest {
         // Going Up
         {
             colorWheel.toggle();
-            verify(core, times(1)).startLiftMotor();
+            verify(core, times(1)).updateLiftMotor(ArmTargets.UP);
 
             range(0, 3).forEach((i) -> {
-                colorWheel.execute();
+                colorWheel.periodic();
                 assertTrue(colorWheel.currentState instanceof ArmState.GoingUp);
             });
 
-            colorWheel.execute();
+            colorWheel.periodic();
             assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyUp);
 
             verify(core, times(1)).stopLiftMotor();
@@ -36,14 +37,14 @@ public class ColorWheelTest {
         // Going Down
         {
             colorWheel.toggle();
-            verify(core, times(2)).startLiftMotor();
+            verify(core, times(2)).updateLiftMotor(ArmTargets.DOWN);
 
             range(0, 3).forEach((i) -> {
-                colorWheel.execute();
+                colorWheel.periodic();
                 assertTrue(colorWheel.currentState instanceof ArmState.GoingDown);
             });
 
-            colorWheel.execute();
+            colorWheel.periodic();
             assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyDown);
 
             verify(core, times(2)).stopLiftMotor();

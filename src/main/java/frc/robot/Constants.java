@@ -21,26 +21,25 @@ public final class Constants {
 
     public static final int CONTROLLER_ID = 0;
 
-    public static final class ExampleConstants {
-
-        public static final int MOTOR_ID = 0;
-        public static final int SENSOR_ID = 0;
-    }
-
     public static final class ColorWheelConstants {
 
-        public static final int LIFT_MOTOR_ID = 0;
-        public static final int SPIN_MOTOR_ID = 0;
+        public static final int LIFT_MOTOR_ID = 10;
+        public static final int SPIN_MOTOR_ID = 11;
 
-        public static final double MOTOR_SPEED_PERCENT = .1;
-
-        // Convert degree/tick to seconds
+        // Ratio to convert seconds/tick to degrees
         public static final double ENCODER_RATIO = (360.0 / 1024.0) * 1000000;
 
-        public static final class ArmPosition {
+        // We want the limit to have a ~10 degree buffer from the target
+        public static final class ArmLimits {
 
             public static final int UP = 98;
-            public static final int DOWN = 2;
+            public static final int DOWN = 175;
+        }
+
+        public static final class ArmTargets {
+
+            public static final int UP = 88;
+            public static final int DOWN = 180;
         }
     }
 }
