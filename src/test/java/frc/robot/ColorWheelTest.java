@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import static java.util.stream.IntStream.range;
 import org.junit.Test;
 import frc.robot.colorwheel.*;
-import frc.robot.colorwheel.ColorWheelSubsystem.ArmState;
 import frc.robot.Constants.ColorWheelConstants.ArmTargets;
 
 public class ColorWheelTest {
@@ -25,11 +24,11 @@ public class ColorWheelTest {
 
             range(0, 3).forEach((i) -> {
                 colorWheel.periodic();
-                assertTrue(colorWheel.currentState instanceof ArmState.GoingUp);
+                assertTrue(colorWheel.currentState instanceof ColorWheelSubsystem.GoingUp);
             });
 
             colorWheel.periodic();
-            assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyUp);
+            assertTrue(colorWheel.currentState instanceof ColorWheelSubsystem.CurrentlyUp);
 
             verify(core, times(1)).stopLiftMotor();
         }
@@ -41,11 +40,11 @@ public class ColorWheelTest {
 
             range(0, 3).forEach((i) -> {
                 colorWheel.periodic();
-                assertTrue(colorWheel.currentState instanceof ArmState.GoingDown);
+                assertTrue(colorWheel.currentState instanceof ColorWheelSubsystem.GoingDown);
             });
 
             colorWheel.periodic();
-            assertTrue(colorWheel.currentState instanceof ArmState.CurrentlyDown);
+            assertTrue(colorWheel.currentState instanceof ColorWheelSubsystem.CurrentlyDown);
 
             verify(core, times(2)).stopLiftMotor();
         }

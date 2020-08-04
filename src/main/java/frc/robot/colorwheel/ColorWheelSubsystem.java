@@ -7,13 +7,14 @@ import frc.robot.Constants.ColorWheelConstants.ArmTargets;
 
 public class ColorWheelSubsystem extends SubsystemBase {
 
-    private final ColorWheelCore colorWheel;
+    // Requires colorWheel so must be init delayed
     public ArmState currentState;
+
+    private final ColorWheelCore colorWheel;
 
     public ColorWheelSubsystem(final ColorWheelCore colorWheel) {
         this.colorWheel = colorWheel;
-
-        currentState = new ArmState.CurrentlyDown(colorWheel);
+        this.currentState = new CurrentlyDown();
 
         final var tab = Shuffleboard.getTab("Driver");
         tab.addString("Color Sensed", () -> colorWheel.getColor().name());
@@ -23,74 +24,76 @@ public class ColorWheelSubsystem extends SubsystemBase {
         debugTab.addString("Current State", () -> this.currentState.getClass().getSimpleName());
     }
 
-    public interface ArmState {
+    private interface ArmState {
 
-        public default ArmState execute(final ColorWheelCore colorWheel) {
+        public default ArmState execute() {
             return this;
         }
 
         public ArmState toggle();
+    }
 
-        public class CurrentlyDown implements ArmState {
-            public CurrentlyDown(final ColorWheelCore colorWheel) {
-                colorWheel.stopLiftMotor();
-            }
-
-            @Override
-            public ArmState toggle() {
-                return new GoingUp();
-            }
+    // #region State Machine Impl
+    public class CurrentlyDown implements ArmState {
+        public CurrentlyDown() {
+            colorWheel.stopLiftMotor();
         }
 
-        public class GoingUp implements ArmState {
-            @Override
-            public ArmState execute(final ColorWheelCore colorWheel) {
-                if (colorWheel.getCurrentPosition() <= ArmLimits.UP) {
-                    return new CurrentlyUp(colorWheel);
-                } else {
-                    colorWheel.updateLiftMotor(ArmTargets.UP);
-                    return this;
-                }
-            }
-
-            @Override
-            public ArmState toggle() {
-                return new GoingDown();
-            }
-        }
-
-        public class CurrentlyUp implements ArmState {
-            public CurrentlyUp(final ColorWheelCore colorWheel) {
-                colorWheel.stopLiftMotor();
-            }
-
-            @Override
-            public ArmState toggle() {
-                return new GoingDown();
-            }
-        }
-
-        public class GoingDown implements ArmState {
-            @Override
-            public ArmState execute(final ColorWheelCore colorWheel) {
-                if (colorWheel.getCurrentPosition() >= ArmLimits.DOWN) {
-                    return new CurrentlyDown(colorWheel);
-                } else {
-                    colorWheel.updateLiftMotor(ArmTargets.DOWN);
-                    return this;
-                }
-            }
-
-            @Override
-            public ArmState toggle() {
-                return new GoingUp();
-            }
+        @Override
+        public ArmState toggle() {
+            return new GoingUp();
         }
     }
 
+    public class GoingUp implements ArmState {
+        @Override
+        public ArmState execute() {
+            if (colorWheel.getCurrentPosition() <= ArmLimits.UP) {
+                return new CurrentlyUp();
+            } else {
+                colorWheel.updateLiftMotor(ArmTargets.UP);
+                return this;
+            }
+        }
+
+        @Override
+        public ArmState toggle() {
+            return new GoingDown();
+        }
+    }
+
+    public class CurrentlyUp implements ArmState {
+        public CurrentlyUp() {
+            colorWheel.stopLiftMotor();
+        }
+
+        @Override
+        public ArmState toggle() {
+            return new GoingDown();
+        }
+    }
+
+    public class GoingDown implements ArmState {
+        @Override
+        public ArmState execute() {
+            if (colorWheel.getCurrentPosition() >= ArmLimits.DOWN) {
+                return new CurrentlyDown();
+            } else {
+                colorWheel.updateLiftMotor(ArmTargets.DOWN);
+                return this;
+            }
+        }
+
+        @Override
+        public ArmState toggle() {
+            return new GoingUp();
+        }
+    }
+    // #endregion
+
     @Override
     public void periodic() {
-        currentState = currentState.execute(colorWheel);
+        currentState = currentState.execute();
     }
 
     public void toggle() {
